@@ -158,6 +158,9 @@ end
 def output_of(*args)
   puts "Running: #{args.inspect}" if OPTIONS[:verbose]
   output = IO.popen(args.map {|a| Shellwords.shellescape(a) }.join(' '), 'r') { |p| p.read }
+# The problem is the "git log -n1" command with nothing there.
+#  return output
+# otherwise the following works.  
   if $?.exitstatus == 0
     return validate_utf8(output)
   else
